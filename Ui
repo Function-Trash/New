@@ -1047,7 +1047,22 @@ do
         Label.TextLabel = TextLabel;
         Label.Container = Container;
         setmetatable(Label, BaseAddons);
+        
+        function Label:SetText(Text)
+            TextLabel.Text = Text
 
+            if DoesWrap then
+                local Y = select(2, Library:GetTextBounds(Text, Enum.Font.Code, 14, Vector2.new(TextLabel.AbsoluteSize.X, math.huge)))
+                TextLabel.Size = UDim2.new(1, -4, 0, Y)
+            end
+
+            Groupbox:Resize();
+        end
+
+        if (not DoesWrap) then
+            setmetatable(Label, BaseAddons);
+        end
+        
         Groupbox:AddBlank(5);
         Groupbox:Resize();
 
